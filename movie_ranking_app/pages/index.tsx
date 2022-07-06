@@ -1,18 +1,30 @@
 import type { NextPage } from "next";
 import axios from "axios";
 import Title from "../components/Title";
-const Home: NextPage = ({ movieData }: any) => {
+
+interface movieDataProps {
+  movieData: { dailyBoxOfficeList: Array<dailyBoxOfficeListProps> };
+}
+interface dailyBoxOfficeListProps {
+  rank: string;
+  movieCd: string;
+  movieNm: string;
+  openDt: string;
+}
+
+const Home: NextPage<movieDataProps> = ({ movieData }) => {
   console.log("axios data : ", movieData);
   return (
     <div>
       <Title />
       <div>
-        {movieData.dailyBoxOfficeList.map((obj: any) => {
+        {movieData.dailyBoxOfficeList.map((obj: dailyBoxOfficeListProps) => {
           return (
             <div key={obj.movieCd}>
               <div>
                 {obj.rank}. {obj.movieNm}
               </div>
+              <div>개봉일 : {obj.openDt}</div>
             </div>
           );
         })}
